@@ -1,0 +1,10 @@
+.DS_Store
+.wrangler/
+.backups/
+*.docx
+convert_images.py
+to_jpg.py
+prompts-gambar-servis.md
+index-cleaned.html
+RANCANGAN*
+*.png
