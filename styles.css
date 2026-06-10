@@ -310,5 +310,5 @@ a:hover { color: var(--accent-dark); }
 .btn-accent { color: #fff !important; }
 .nav-links a { color: var(--text-muted); }
 .nav-cta { color: #fff !important; }
-.location-map { display: none; }
+/* .location-map handled inline via style attribute */
 .location-info .btn-wa { display: inline-flex; width: auto; }
