@@ -1,4 +1,4 @@
-// Scroll-triggered animations — viewport only, no fallback timeout (v2)
+// v20260611-1957 — Viewport-triggered animations (no fallback)
 (function() {
   const els = document.querySelectorAll('[class*="anim-"]');
   if (!els.length) return;
@@ -12,7 +12,6 @@
   }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
   els.forEach(el => observer.observe(el));
 })();
-
 // Trust bar counter — subtle reveal effect (numbers already in HTML, just animate reveal)
 (function() {
   const trustItems = document.querySelectorAll('.trust-item');
