@@ -11,7 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Force clean deploy (clear wrangler cache)
+        run: rm -rf .wrangler
+
       - name: Deploy to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-        run: npx wrangler pages deploy . --project-name unidental-setiaalam --branch main
+        run: npx wrangler@latest pages deploy . --project-name unidental-setiaalam --branch main --commit-dirty=true
