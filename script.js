@@ -11,10 +11,6 @@
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
   els.forEach(el => observer.observe(el));
-  // Fallback: show all after 4s
-  setTimeout(function() {
-    els.forEach(el => el.classList.add('visible'));
-  }, 4000);
 })();
 
 // Trust bar counter — subtle reveal effect (numbers already in HTML, just animate reveal)
