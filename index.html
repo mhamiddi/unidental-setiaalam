@@ -777,10 +777,6 @@
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
   els.forEach(function(el) { observer.observe(el); });
-  // Fallback after 4s
-  setTimeout(function() {
-    els.forEach(function(el) { el.classList.add('visible'); });
-  }, 4000);
 })();
 // Trust bar
 (function() {
