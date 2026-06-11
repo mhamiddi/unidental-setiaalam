@@ -1,20 +1,35 @@
-// Fade-up animations — with safety fallback after 3s
+// Scroll-triggered animations — watches all [class*="anim-"] elements
 (function() {
-  const els = document.querySelectorAll('.fade-up');
+  const els = document.querySelectorAll('[class*="anim-"]');
   if (!els.length) return;
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         e.target.classList.add('visible');
-        observer.unobserve(e.target); // once seen, stop watching
+        observer.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
   els.forEach(el => observer.observe(el));
-  // Fallback: show all after 3s in case observer fails (no scroll, JS issue, etc.)
+  // Fallback: show all after 4s
   setTimeout(function() {
     els.forEach(el => el.classList.add('visible'));
-  }, 3000);
+  }, 4000);
+})();
+
+// Trust bar counter — subtle reveal effect (numbers already in HTML, just animate reveal)
+(function() {
+  const trustItems = document.querySelectorAll('.trust-item');
+  if (!trustItems.length) return;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  trustItems.forEach(el => obs.observe(el));
 })();
 
 // Before & After Carousel
@@ -80,3 +95,25 @@ async function submitBooking(e) {
   
   submitBtn.disabled = false;
 }
+
+// Mobile Menu Toggle
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const hamburger = document.getElementById('navHamburger');
+  menu.classList.toggle('open');
+  hamburger.classList.toggle('open');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const hamburger = document.getElementById('navHamburger');
+  menu.classList.remove('open');
+  hamburger.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close mobile menu on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeMobileMenu();
+});

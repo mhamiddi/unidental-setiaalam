@@ -34,8 +34,82 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <meta http-equiv="Cache-Control" content="public, max-age=86400">
-  <link rel="stylesheet" href="styles.css">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="styles.css?v=20260611">
+  <!-- INLINE ANIMATION CSS (no external dependency, no cache issue) -->
+  <style>
+/* ===== ANIMATIONS ===== */
+/* Base: hidden until scrolled into view */
+[class*="anim-"] {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+/* Direction presets */
+.anim-fade-up    { transform: translateY(36px); }
+.anim-fade-down  { transform: translateY(-36px); }
+.anim-fade-left  { transform: translateX(-36px); }
+.anim-fade-right { transform: translateX(36px); }
+.anim-fade-in    { transform: none; }
+.anim-scale-in   { transform: scale(0.92); }
+.anim-scale-up   { transform: scale(0.9); }
+/* Visible state */
+[class*="anim-"].visible {
+  opacity: 1;
+  transform: translate(0) scale(1);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--delay, 0s);
+}
+/* Stagger helper */
+.stagger-children > :nth-child(1)  { --delay: 0s; }
+.stagger-children > :nth-child(2)  { --delay: 0.08s; }
+.stagger-children > :nth-child(3)  { --delay: 0.16s; }
+.stagger-children > :nth-child(4)  { --delay: 0.24s; }
+.stagger-children > :nth-child(5)  { --delay: 0.32s; }
+.stagger-children > :nth-child(6)  { --delay: 0.4s; }
+.stagger-children > :nth-child(7)  { --delay: 0.48s; }
+.stagger-children > :nth-child(8)  { --delay: 0.56s; }
+.stagger-children > :nth-child(9)  { --delay: 0.64s; }
+.stagger-children > :nth-child(10) { --delay: 0.72s; }
+/* Bounce for step numbers */
+@keyframes bounce-in {
+  0%   { transform: scale(0); }
+  50%  { transform: scale(1.15); }
+  70%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+.anim-bounce.visible .step-num {
+  animation: bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) var(--delay, 0s) both;
+}
+/* Count-up */
+.anim-count.visible .value {
+  animation: count-in 0.6s ease-out var(--delay, 0s) both;
+}
+@keyframes count-in {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  [class*="anim-"], [class*="anim-"].visible {
+    opacity: 1; transform: none; transition: none; animation: none;
+  }
+}
+/* Mobile animation overrides */
+@media (max-width: 768px) {
+  [class*="anim-"].visible { transition-duration: 0.45s !important; }
+  .anim-fade-up    { transform: translateY(20px); }
+  .anim-fade-down  { transform: translateY(-20px); }
+  .anim-fade-left  { transform: translateX(-20px); }
+  .anim-fade-right { transform: translateX(20px); }
+  .anim-scale-in   { transform: scale(0.96); }
+  .anim-scale-up   { transform: scale(0.95); }
+  .stagger-children > :nth-child(n) { --delay: 0.05s; }
+  .anim-fade-left, .anim-fade-right { transform: translateY(20px); }
+}
+  </style>
 </head>
 <body>
 
@@ -43,46 +117,60 @@
 <nav class="nav">
   <div class="nav-inner">
     <div class="nav-logo" style="display:flex;align-items:center;gap:10px;">
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-        <rect x="2" y="4" width="32" height="28" rx="8" fill="var(--primary)" opacity="0.08"/>
-        <path d="M18 8c-4 0-5.5 2.5-5.5 4.5 0 3 1.5 5.5 1.5 7s1 2.5 1.5 2.5c.3 0 .5-.4.8-1.2s.7-2 1.2-2 .6 1.2 1 2 .7 1.2 1 1.2c.5 0 1.5-1 1.5-2.5s1.5-4 1.5-7c0-2-1.5-4.5-5.5-4.5z" fill="var(--primary)"/>
-        <circle cx="18" cy="13" r="2" fill="var(--accent)" opacity="0.8"/>
-      </svg>
+      <a href="/" style="display:flex;align-items:center;gap:6px;text-decoration:none;">
+        <img src="images/logo-unidental.png" alt="UNI Dental Setia Alam" style="height:32px;width:auto;">
+      </a>
     </div>
     <div class="nav-links">
       <a href="#braces">Braces</a>
       <a href="#keputusan">Keputusan</a>
       <a href="#rawatan">Rawatan</a>
       <a href="#kenapa">Kenapa Kami</a>
+      <a href="#doktor">Doktor</a>
       <a href="#testimoni">Testimoni</a>
       <a href="#lokasi">Lokasi</a>
       <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+nak+tanya+tentang+rawatan+gigi." class="nav-cta" target="_blank"> Tempahan</a>
     </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#braces" onclick="closeMobileMenu()">Braces</a>
+  <a href="#keputusan" onclick="closeMobileMenu()">Keputusan</a>
+  <a href="#rawatan" onclick="closeMobileMenu()">Rawatan</a>
+  <a href="#kenapa" onclick="closeMobileMenu()">Kenapa Kami</a>
+  <a href="#doktor" onclick="closeMobileMenu()">Doktor</a>
+  <a href="#testimoni" onclick="closeMobileMenu()">Testimoni</a>
+  <a href="#lokasi" onclick="closeMobileMenu()">Lokasi</a>
+  <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+nak+tanya+tentang+rawatan+gigi." class="mobile-cta" target="_blank"> Tempahan</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-content">
-      <span class="hero-badge">🦷 Klinik Pergigian Setia Alam</span>
-      <h1 class="hero-title">Senyuman <em>Lebih Yakin</em> Bermula Di Sini.</h1>
-      <p class="hero-subtitle">Rawatan pergigian profesional dengan pendekatan lembut & mesra. Doktor berpengalaman, teknologi moden, dan persekitaran selesa - supaya setiap kunjungan anda tenang.</p>
-      <ul class="hero-features">
-        <li>Konsultasi percuma - tiada komitmen</li>
-        <li>Prosedur minimal sakit dengan teknologi terkini</li>
-        <li>Pelbagai pilihan rawatan - braces, scaling, cabut gigi & banyak lagi</li>
+      <span class="hero-badge anim-fade-down" style="--delay:0.05s"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px;flex-shrink:0;margin-right:4px;"><path d="M8 3C5.5 3 4 4.5 4 6c0 2 1.5 3.5 1.5 4.5s.5 1.5 1 1.5c.3 0 .5-.4.7-1s.5-1.5 1-1.5.8 1 1 1.5.4 1 .7 1c.5 0 1-.5 1-1.5S12 8 12 6c0-1.5-1.5-3-4-3z" fill="var(--primary)" opacity="0.7"/><circle cx="8" cy="6" r="1" fill="var(--accent)" opacity="0.9"/></svg> Klinik Pergigian Setia Alam</span>
+      <h1 class="hero-title anim-fade-up" style="--delay:0.12s">Senyuman <em>Lebih Yakin</em> Bermula Di Sini.</h1>
+      <p class="hero-subtitle anim-fade-up" style="--delay:0.2s">Rawatan pergigian profesional dengan pendekatan lembut & mesra. Doktor berpengalaman, teknologi moden, dan persekitaran selesa - supaya setiap kunjungan anda tenang.</p>
+      <ul class="hero-features stagger-children anim-fade-up" style="--delay:0.28s">
+        <li class="anim-fade-up">Konsultasi percuma - tiada komitmen</li>
+        <li class="anim-fade-up">Prosedur minimal sakit dengan teknologi terkini</li>
+        <li class="anim-fade-up">Pelbagai pilihan rawatan - braces, scaling, cabut gigi & banyak lagi</li>
       </ul>
-      <div class="hero-ctas">
+      <div class="hero-ctas anim-fade-up" style="--delay:0.4s">
         <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+nak+tempah+konsultasi+percuma." class="btn btn-wa" target="_blank"> Tempah Sekarang</a>
         <a href="#rawatan" class="btn btn-outline">Rawatan Kami</a>
       </div>
     </div>
-    <div class="hero-visual">
+    <div class="hero-visual anim-scale-in" style="--delay:0.15s">
       <div class="hero-img-placeholder" style="background:none;aspect-ratio:auto;">
         <img src="images/hero-clinic.webp" alt="Klinik Pergigian UNI Dental Setia Alam" style="width:100%;height:auto;border-radius:var(--radius);display:block;box-shadow:var(--shadow-md);" loading="eager">
       </div>
-      <div class="hero-trust-badge">
+      <div class="hero-trust-badge anim-fade-up" style="--delay:0.65s">
         <span class="stars">★★★★★</span>
         <span><span class="rating">5.0</span><br><span class="count">159 Ulasan Google</span></span>
       </div>
@@ -91,12 +179,12 @@
 </section>
 
 <!-- TRUST BAR -->
-<div class="trust-bar fade-up">
+<div class="trust-bar anim-fade-up">
   <div class="trust-inner">
-    <div class="trust-item"><div class="value">14+</div><div class="label">Tahun Pengalaman</div></div>
-    <div class="trust-item"><div class="value">5.0 ★</div><div class="label">Google Rating</div></div>
-    <div class="trust-item"><div class="value">8+</div><div class="label">Jenis Rawatan</div></div>
-    <div class="trust-item"><div class="value">9AM-11PM</div><div class="label">Buka Setiap Hari</div></div>
+    <div class="trust-item anim-count"><div class="value">14+</div><div class="label">Tahun Pengalaman</div></div>
+    <div class="trust-item anim-count"><div class="value">5.0 ★</div><div class="label">Google Rating</div></div>
+    <div class="trust-item anim-count"><div class="value">8+</div><div class="label">Jenis Rawatan</div></div>
+    <div class="trust-item anim-count"><div class="value">9AM-11PM</div><div class="label">Buka Setiap Hari</div></div>
   </div>
 </div>
 
@@ -106,9 +194,9 @@
     <p class="section-label">Rawatan Kami</p>
     <h2 class="section-title">Penjagaan Gigi Lengkap Untuk <em style="color:var(--primary);font-style:normal;">Semua Peringkat Umur</em></h2>
     <p class="section-subtitle">Dari pemeriksaan rutin hingga rawatan kosmetik - semua di bawah satu bumbung.</p>
-    <div class="treatments-grid fade-up">
+    <div class="treatments-grid stagger-children anim-fade-up">
       <!-- Treatment 1: Braces -->
-      <div class="treatment-card">
+      <div class="treatment-card anim-fade-up">
         <img class="card-img" src="images/braces-treatment.webp" alt="Braces & Pendakap Gigi" loading="lazy">
         <div class="card-body">
           <h3>Braces & Pendakap Gigi</h3>
@@ -118,7 +206,7 @@
         </div>
       </div>
       <!-- Treatment 2: Scaling -->
-      <div class="treatment-card">
+      <div class="treatment-card anim-fade-up">
         <img class="card-img" src="images/scaling-treatment.webp" alt="Scaling & Polishing" loading="lazy">
         <div class="card-body">
           <h3>Scaling & Polishing</h3>
@@ -128,7 +216,7 @@
         </div>
       </div>
       <!-- Treatment 3: Cabut Gigi -->
-      <div class="treatment-card">
+      <div class="treatment-card anim-fade-up">
         <img class="card-img" src="images/cabut-gigi.webp" alt="Cabut Gigi" loading="lazy">
         <div class="card-body">
           <h3>Cabut Gigi</h3>
@@ -138,7 +226,7 @@
         </div>
       </div>
       <!-- Treatment 4: Whitening -->
-      <div class="treatment-card">
+      <div class="treatment-card anim-fade-up">
         <img class="card-img" src="images/whitening-ba.webp" alt="Whitening Before & After" loading="lazy">
         <div class="card-body">
           <h3>Whitening / Pemutihan</h3>
@@ -148,7 +236,7 @@
         </div>
       </div>
       <!-- Treatment 5: Veneer -->
-      <div class="treatment-card">
+      <div class="treatment-card anim-fade-up">
         <img class="card-img" src="images/veneer.webp" alt="Veneer Gigi" loading="lazy">
         <div class="card-body">
           <h3>Veneer Gigi</h3>
@@ -158,7 +246,7 @@
         </div>
       </div>
       <!-- Treatment 6: Denture -->
-      <div class="treatment-card">
+      <div class="treatment-card anim-fade-up">
         <img class="card-img" src="images/denture.webp" alt="Gigi Palsu / Denture" loading="lazy">
         <div class="card-body">
           <h3>Gigi Palsu / Denture</h3>
@@ -168,7 +256,7 @@
         </div>
       </div>
       <!-- Treatment 7: Root Canal -->
-      <div class="treatment-card">
+      <div class="treatment-card anim-fade-up">
         <img class="card-img" src="images/root-canal.webp" alt="Root Canal / Rawatan Akar" loading="lazy">
         <div class="card-body">
           <h3>Root Canal / Rawatan Akar</h3>
@@ -178,7 +266,7 @@
         </div>
       </div>
       <!-- Treatment 8: Tampal Gigi -->
-      <div class="treatment-card">
+      <div class="treatment-card anim-fade-up">
         <img class="card-img" src="images/tampal-gigi.webp" alt="Tampal Gigi / Filling" loading="lazy">
         <div class="card-body">
           <h3>Tampal Gigi / Filling</h3>
@@ -188,7 +276,7 @@
         </div>
       </div>
       <!-- Treatment 9: Kanak-Kanak -->
-      <div class="treatment-card">
+      <div class="treatment-card anim-fade-up">
         <img class="card-img" src="images/kanak-kanak.webp" alt="Rawatan Kanak-Kanak" loading="lazy">
         <div class="card-body">
           <h3>Rawatan Kanak-Kanak</h3>
@@ -204,9 +292,9 @@
 <!-- BEFORE & AFTER -->
 <section class="section ba-section" id="keputusan">
   <div class="section-inner">
-    <p class="section-label centered" style="text-align:center;">Keputusan Rawatan</p>
-    <h2 class="section-title centered">Sebelum & Selepas - <em style="color:var(--primary);font-style:normal;">Transformasi Senyuman</em></h2>
-    <p class="section-subtitle centered" style="margin-bottom:16px;">Lihat sendiri perubahan yang kami bawa kepada senyuman pesakit kami.</p>
+    <p class="section-label">Keputusan Rawatan</p>
+    <h2 class="section-title">Sebelum & Selepas - <em style="color:var(--primary);font-style:normal;">Transformasi Senyuman</em></h2>
+    <p class="section-subtitle" style="margin-bottom:16px;">Lihat sendiri perubahan yang kami bawa kepada senyuman pesakit kami.</p>
 
     <div class="ba-carousel-wrap">
       <div class="ba-carousel" id="baCarousel">
@@ -254,23 +342,23 @@
         <span class="ba-dot" onclick="goBA(1)"></span>
       </div>
     </div>
-    <p class="section-subtitle centered" style="margin-top:20px;text-align:center;width:100%;">Gambar sebenar pesakit dengan kebenaran. Hasil individu mungkin berbeza.</p>
+    <p class="section-subtitle" style="margin-top:20px;width:100%;">Gambar sebenar pesakit dengan kebenaran. Hasil individu mungkin berbeza.</p>
   </div>
 </section>
 
 <section class="section braces-specialist" id="braces" style="background:var(--bg-light);">
   <div class="section-inner">
-    <p class="section-label centered" style="text-align:center;">Braces Specialist</p>
-    <h2 class="section-title centered">Senyuman Lurus & Confident <em style="color:var(--primary);font-style:normal;">Bermula Dengan Braces</em></h2>
-    <p class="section-subtitle centered" style="margin-bottom:32px;">Pilihan braces lengkap untuk pelbagai bajet - dari yang basic hingga premium. Konsultasi pakar PERCUMA.</p>
+    <p class="section-label">Braces Specialist</p>
+    <h2 class="section-title">Senyuman Lurus & Confident <em style="color:var(--primary);font-style:normal;">Bermula Dengan Braces</em></h2>
+    <p class="section-subtitle" style="margin-bottom:32px;">Pilihan braces lengkap untuk pelbagai bajet - dari yang basic hingga premium. Konsultasi pakar PERCUMA.</p>
 
     <div class="braces-hero" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:40px;">
-      <div class="braces-visual">
+      <div class="braces-visual anim-scale-in" style="--delay:0.1s">
         <img src="images/braces-woman.webp" alt="Rawatan Braces UNI Dental" style="width:100%;border-radius:var(--radius);display:block;box-shadow:var(--shadow);">
       </div>
-      <div class="braces-info">
+      <div class="braces-info anim-fade-right" style="--delay:0.2s">
         <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);">
-          <h3 style="font-size:1.3rem;font-weight:700;margin-bottom:16px;">🦷 Kenapa Pilih UNI Dental untuk Braces?</h3>
+          <h3 style="font-size:1.3rem;font-weight:700;margin-bottom:16px;"> Kenapa Pilih UNI Dental untuk Braces?</h3>
           <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
             <li style="display:flex;gap:10px;font-size:0.95rem;color:var(--text-muted);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"/></svg> <span><strong>Konsultasi percuma</strong> - jumpa doktor, dapatkan pelan rawatan lengkap tanpa komitmen</span></li>
             <li style="display:flex;gap:10px;font-size:0.95rem;color:var(--text-muted);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"/></svg> <span><strong>3 jenis braces</strong> - Metal, Seramik & Self-Ligating - pilih ikut bajet & keperluan</span></li>
@@ -282,8 +370,8 @@
       </div>
     </div>
 
-    <div class="braces-options" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:40px;">
-      <div style="background:#fff;border:2px solid var(--accent);border-radius:var(--radius);padding:28px 24px;text-align:center;position:relative;">
+    <div class="braces-options stagger-children" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:40px;">
+      <div class="anim-scale-up" style="--delay:0.05s;background:#fff;border:2px solid var(--accent);border-radius:var(--radius);padding:28px 24px;text-align:center;position:relative;">
         <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:4px 16px;border-radius:20px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Paling Laris</div>
         <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:6px;">Conventional Metal Braces</h3>
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">Pilihan paling popular. Berkesan untuk pelbagai jenis kes gigi.</p>
@@ -291,14 +379,14 @@
         <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">Atau dari <strong>RM150/bulan</strong></div>
         <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+berminat+dengan+Metal+Braces+(RM3,900).+Boleh+tanya+pilihan+pembayaran+dan+installment%3F" class="btn btn-wa" target="_blank"> Pilihan Metal Braces</a>
       </div>
-      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;text-align:center;">
+      <div class="anim-scale-up" style="--delay:0.15s;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;text-align:center;">
         <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:6px;">Self-Ligating Braces</h3>
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">Teknologi lebih advance. Tempoh rawatan lebih pendek, kurang adjustment.</p>
         <div style="font-size:1.5rem;font-weight:800;color:var(--primary);margin-bottom:4px;">RM5,500</div>
         <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">Atau dari <strong>RM200/bulan</strong></div>
         <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+berminat+dengan+Self-Ligating+Braces+(RM5,500).+Boleh+tanya+detail+dan+installment%3F" class="btn btn-wa" target="_blank"> Pilihan Self-Ligating</a>
       </div>
-      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;text-align:center;">
+      <div class="anim-scale-up" style="--delay:0.25s;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;text-align:center;">
         <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:6px;">Ceramic Braces</h3>
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">Braces 'clear' - warna sepadan gigi. Kurang nampak, sesuai untuk dewasa.</p>
         <div style="font-size:1.5rem;font-weight:800;color:var(--primary);margin-bottom:4px;">RM7,000</div>
@@ -307,9 +395,9 @@
       </div>
     </div>
 
-    <div class="installment-banner" style="background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:var(--radius);padding:32px;color:#fff;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;">
+    <div class="installment-banner anim-fade-up" style="background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:var(--radius);padding:32px;color:#fff;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;">
       <div>
-        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:12px;">💰 Pelan Pembayaran Fleksibel</h3>
+        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:12px;"> Pelan Pembayaran Fleksibel</h3>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:0.9rem;opacity:0.9;">
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"/></svg> Deposit rendah - mula rawatan dengan bayaran minima</li>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"/></svg> Bayaran bulanan dari serendah <strong>RM150/bulan</strong></li>
@@ -319,14 +407,14 @@
         </ul>
       </div>
       <div style="text-align:center;">
-        <p style="font-size:1rem;margin-bottom:16px;">📸 Dapatkan <strong>Smile Assessment PERCUMA</strong> hari ini!</p>
+        <p style="font-size:1rem;margin-bottom:16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px;"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2v11z"/><circle cx="12" cy="13" r="4"/></svg> Dapatkan <strong>Smile Assessment PERCUMA</strong> hari ini!</p>
         <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+nak+buat+Smile+Assessment+percuma+untuk+braces.+Boleh+buat+appointment%3F" class="btn btn-accent" target="_blank"> Tempah Smile Assessment Percuma</a>
         <p style="font-size:0.8rem;opacity:0.7;margin-top:12px;">Tiada komitmen. Konsultasi adalah percuma.</p>
       </div>
     </div>
 
     <div style="margin-top:20px;text-align:center;padding:16px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);">
-      <p style="font-size:0.9rem;color:var(--text-muted);">🦷 <strong>Retainers (Hawley / Essix)</strong> - dari <strong>RM300</strong> setiap satu. Penting selepas rawatan braces untuk kekalkan hasil.</p>
+      <p style="font-size:0.9rem;color:var(--text-muted);"><strong>Retainers (Hawley / Essix)</strong> - dari <strong>RM300</strong> setiap satu. Penting selepas rawatan braces untuk kekalkan hasil.</p>
       <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+nak+tanya+pasal+Retainers+(RM300).+Boleh+bagi+detail%3F" class="wa-link" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--cta-primary);font-weight:600;font-size:0.9rem;margin-top:8px;" target="_blank"> Info Retainers →</a>
     </div>
   </div>
@@ -338,24 +426,24 @@
     <p class="section-label">Cara Tempah</p>
     <h2 class="section-title">3 Langkah Mudah Untuk <em style="color:var(--accent);font-style:normal;">Senyuman Lebih Sihat</em></h2>
     <p class="section-subtitle">Tiada proses rumit. Hanya 3 langkah dan gigi anda dalam tangan profesional.</p>
-    <div class="booking-steps fade-up">
-      <div class="booking-step">
+    <div class="booking-steps stagger-children anim-fade-up">
+      <div class="booking-step anim-bounce">
         <div class="step-num">1</div>
         <h3>WhatsApp / Call</h3>
         <p>Hubungi kami untuk konsultasi percuma. Kongsikan masalah gigi anda - kami bantu cadangkan rawatan terbaik.</p>
       </div>
-      <div class="booking-step">
+      <div class="booking-step anim-bounce">
         <div class="step-num">2</div>
         <h3>Temujanji</h3>
         <p>Pilih tarikh & masa yang sesuai. Kami fleksibel - termasuk hujung minggu.</p>
       </div>
-      <div class="booking-step">
+      <div class="booking-step anim-bounce">
         <div class="step-num">3</div>
         <h3>Rawatan</h3>
         <p>Datang ke klinik, jumpa doktor, dan mulakan perjalanan ke senyuman idaman anda!</p>
       </div>
     </div>
-    <div class="booking-cta fade-up">
+    <div class="booking-cta anim-fade-up">
       <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+nak+tempah+konsultasi+percuma.+Bila+slot+available%3F" class="btn btn-accent" target="_blank"> Tempah Sekarang</a>
     </div>
   </div>
@@ -367,7 +455,7 @@
     <p class="section-label">Kenapa UNI Dental?</p>
     <h2 class="section-title">Bukan Sekadar Klinik - Kami <em style="color:var(--primary);font-style:normal;">Peduli</em> Senyuman Anda</h2>
     <p class="section-subtitle">Setiap pesakit dilayan seperti keluarga. Tiada rawatan dipaksa - hanya yang anda benar-benar perlukan.</p>
-    <div class="why-grid fade-up">
+    <div class="why-grid stagger-children anim-fade-up">
       <div class="why-card">
         
         <h3>Doktor Berpengalaman</h3>
@@ -402,13 +490,55 @@
   </div>
 </section>
 
+<!-- DOCTOR -->
+<section class="doctor-section" id="doktor">
+  <div class="section-inner">
+    <p class="section-label">Doktor Kami</p>
+    <h2 class="section-title">Bertemu Dengan <em style="color:var(--primary);font-style:normal;">Pakar Kami</em></h2>
+    <p class="section-subtitle" style="max-width:550px;">Rawatan anda di tangan profesional yang berpengalaman & bertauliah.</p>
+    <div class="doctor-grid anim-fade-up">
+      <div class="doctor-img-wrap anim-scale-in" style="--delay:0.1s">
+        <img src="images/dr-syukri.jpeg" alt="Dr. Muhammad Syukri Bin Mohd Kama - Dental Surgeon UNI Dental Setia Alam" class="doctor-img" loading="lazy">
+      </div>
+      <div class="doctor-info anim-fade-right" style="--delay:0.2s">
+        <div class="doctor-name">Dr. Muhammad Syukri Bin Mohd Kama</div>
+        <div class="doctor-title">Dental Surgeon</div>
+
+        <div class="doctor-qual"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;flex-shrink:0;margin-right:6px;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Bachelor of Dental Surgery (BDS)</div>
+        <div class="doctor-reg">Registered with Malaysian Dental Council (MDC)</div>
+
+        <div class="doctor-divider"></div>
+
+        <div class="doctor-section-title">Pengalaman</div>
+        <div class="doctor-exp-item">6+ tahun pengalaman dalam rawatan pergigian</div>
+        <div class="doctor-exp-item">Fokus dalam rawatan braces & estetik</div>
+
+        <div class="doctor-divider"></div>
+
+        <div class="doctor-section-title">Special Interest</div>
+        <div class="doctor-interest-list">
+          <span class="doctor-interest-tag">Braces &amp; Aligners</span>
+          <span class="doctor-interest-tag">Cosmetic Dentistry</span>
+          <span class="doctor-interest-tag">Whitening</span>
+          <span class="doctor-interest-tag">Veneer</span>
+          <span class="doctor-interest-tag">General Dentistry</span>
+        </div>
+
+        <div class="doctor-quote">
+          <p>"Dr. Syukri is passionate about helping patients achieve confident, beautiful smiles. Seeing patients smile with confidence after treatment is the most rewarding part of the job."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- TESTIMONIALS -->
 <section class="section testimonials" id="testimoni">
   <div class="section-inner">
-    <p class="section-label centered">Testimoni Pesakit</p>
-    <h2 class="section-title centered">Apa Kata <em style="color:var(--primary);font-style:normal;">Pesakit Kami</em></h2>
-    <p class="section-subtitle centered">Kepuasan pesakit adalah ukuran kejayaan kami. Rated ⭐5.0 di Google - ini antara maklum balas mereka.</p>
-    <div class="testimonials-grid fade-up">
+    <p class="section-label">Testimoni Pesakit</p>
+    <h2 class="section-title">Apa Kata <em style="color:var(--primary);font-style:normal;">Pesakit Kami</em></h2>
+    <p class="section-subtitle">Kepuasan pesakit adalah ukuran kejayaan kami. Rated 5.0 ★ di Google - ini antara maklum balas mereka.</p>
+    <div class="testimonials-grid stagger-children anim-fade-up">
       <div class="testimonial-card">
         <div class="stars">★★★★★</div>
         <p class="quote">"Recomen giler.. cabut x rasa. Layan terbaik sangat terbaik… harga pon x mahal… sangat recomanded. Dah kali ke-3 datang cabut gigi sini."</p>
@@ -446,8 +576,8 @@
         </div>
       </div>
     </div>
-    <div class="testimonial-cta fade-up">
-      <p>📱 **159 ulasan ⭐5.0** di Google - baca sendiri pengalaman pesakit kami!</p>
+    <div class="testimonial-cta anim-fade-up">
+      <p><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px;flex-shrink:0"><path d="M8 1.33l2.06 4.18 4.61.67-3.34 3.25.79 4.57L8 11.6 3.88 14l.79-4.57L1.33 6.18l4.61-.67L8 1.33z" fill="#f4bc1c"/></svg> **159 ulasan 5.0** di Google - baca sendiri pengalaman pesakit kami!</p>
       <a href="https://maps.google.com/?cid=8966388492159517381" class="btn btn-accent" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px;flex-shrink:0"><path d="M8 1.33l2.06 4.18 4.61.67-3.34 3.25.79 4.57L8 11.6 3.88 14l.79-4.57L1.33 6.18l4.61-.67L8 1.33z" fill="#f4bc1c"/></svg> Baca Semua Review Google</a>
       <p style="font-size:0.8rem;color:var(--text-muted);margin-top:12px;">Belum review? Klik butang & tinggalkan review - kami hargai setiap feedback!</p>
     </div>
@@ -459,7 +589,7 @@
   <div class="section-inner">
     <p class="section-label">Soalan Lazim</p>
     <h2 class="section-title">Ada Soalan? <em style="color:var(--primary);font-style:normal;">Kami Ada Jawapan.</em></h2>
-    <div class="faq-list fade-up">
+    <div class="faq-list anim-fade-up">
       <div class="faq-item" onclick="this.classList.toggle('open')">
         <button class="faq-q">Adakah rawatan sakit?</button>
         <div class="faq-a">Kami faham - ini soalan #1 yang pesakit tanya. Kami guna teknik anestesia terkini dan pendekatan lembut. Untuk scaling, kami guna teknologi ultrasonik yang kurang getaran. Untuk prosedur seperti cabutan dan root canal, bius tempatan memastikan anda tak rasa sakit. Kebanyakan pesakit kami terkejut sebab rasa lebih selesa dari yang dijangkakan. <strong>Oh ya - konsultasi anak-anak adalah PERCUMA!</strong></div>
@@ -493,11 +623,11 @@
   <div class="section-inner">
     <p class="section-label">Lokasi Kami</p>
     <h2 class="section-title">Datanglah Jumpa <em style="color:var(--primary);font-style:normal;">Kami</em> di Setia Alam</h2>
-    <div class="location-grid fade-up">
-      <div class="location-info">
-        <h3>🏥 Klinik Pergigian UNI Dental</h3>
+    <div class="location-grid anim-fade-up">
+      <div class="location-info anim-fade-left" style="--delay:0.1s">
+        <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;margin-right:4px;"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Klinik Pergigian UNI Dental</h3>
         <p>📍 <a href="https://maps.google.com/?q=VA-G-03+Edusentral+Setia+Alam+40170+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--text-muted);text-decoration:underline;text-underline-offset:2px;">Seksyen U13, VA-G-03 Edusentral, 1, Jalan Setia Murni U13/51, Setia Alam, 40170 Shah Alam, Selangor</a></p>
-        <p>📞 <a href="tel:+60148827128" style="font-weight:600;">014-882 7128</a></p>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px;flex-shrink:0"><path d="M14.7 10.07l-3.2-1.4a.62.62 0 00-.73.2l-1.07 1.33a8.53 8.53 0 01-4-4L6.93 5.2a.6.6 0 00.2-.73L5.73 1.27a.6.6 0 00-.66-.33L1.93 1.4a.6.6 0 00-.5.6A11.7 11.7 0 0013 14.53a.6.6 0 00.6-.5l.47-2.93a.6.6 0 00-.37-.66z" fill="currentColor"/></svg> <a href="tel:+601****7128" style="font-weight:600;">014-882 7128</a>
         <p>📧 unidentalsetiaalam@gmail.com</p>
         <p>🅿️ Parking depan kedai + basement - OKU parking dihadapan klinik</p>
         <div class="hours-grid" style="margin-top:16px;">
@@ -506,7 +636,7 @@
         <p style="font-size:0.85rem;color:var(--text-muted);margin-top:8px;">🛡️ 24 jam kawalan keselamatan & CCTV - selamat untuk lawatan malam</p>
         </div>
       </div>
-      <div class="location-map" style="background:var(--bg-light);border-radius:var(--radius);aspect-ratio:4/3;border:1px solid var(--border);overflow:hidden;">
+      <div class="location-map anim-fade-right" style="--delay:0.25s;background:var(--bg-light);border-radius:var(--radius);aspect-ratio:4/3;border:1px solid var(--border);overflow:hidden;">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.678!2d101.449!3d3.085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc68a8a0b3b5f3%3A0x5f3b8e5a0e9c5b0d!2sEdusentral%2C%20Setia%20Alam!5e0!3m2!1sen!2smy!4v1" width="100%" height="100%" style="border:0;border-radius:var(--radius);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
@@ -515,13 +645,13 @@
 <!-- BOOKING FORM -->
 <section class="section booking-form" id="temujanji">
   <div class="section-inner">
-    <p class="section-label centered">Temujanji</p>
-    <h2 class="section-title centered">Nak Booking <em style="color:var(--primary);font-style:normal;">Tanpa Call?</em></h2>
-    <p class="section-subtitle centered">Isi borang bawah — kami akan WhatsApp anda dalam masa 15 minit untuk confirm slot.</p>
+    <p class="section-label">Temujanji</p>
+    <h2 class="section-title">Nak Booking <em style="color:var(--primary);font-style:normal;">Tanpa Call?</em></h2>
+    <p class="section-subtitle">Isi borang bawah — kami akan WhatsApp anda dalam masa 15 minit untuk confirm slot.</p>
     
-    <div class="form-card fade-up">
+    <div class="form-card anim-fade-up">
       <div class="form-header">
-        <div class="icon">📋</div>
+        <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
         <h3>Borang Pertanyaan & Temujanji</h3>
         <p>Percuma. Tiada komitmen. Tiada paksaan.</p>
       </div>
@@ -556,21 +686,23 @@
           <label for="bf-message">Mesej (optional)</label>
           <textarea id="bf-message" name="message" placeholder="Contoh: Nak tanya harga braces, atau nak booking slot Sabtu pagi..."></textarea>
         </div>
+        <div class="form-submit-wrap">
         <button type="submit" class="form-submit" id="bf-submit">
-          <span id="bf-btn-text">📩 Hantar Pertanyaan</span>
+          <span id="bf-btn-text"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px;flex-shrink:0"><path d="M1 3.5A1.5 1.5 0 012.5 2h11A1.5 1.5 0 0115 3.5v9a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 011 12.5v-9z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M1 4l7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg> Hantar Pertanyaan</span>
           <span id="bf-btn-loading" style="display:none;">⏳ Menghantar...</span>
         </button>
+        </div>
       </form>
 
       <div class="form-success" id="formSuccess">
-        <div class="check">✅</div>
+        <div class="check"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
         <h4>Terima Kasih!</h4>
         <p>Kami dah terima pertanyaan anda. Team UNI Dental akan WhatsApp dalam masa <strong>15 minit</strong> untuk confirm temujanji.</p>
         <p style="margin-top:12px;font-size:0.85rem;">⏰ Waktu operasi: 9AM - 11PM setiap hari</p>
-        <a href="https://wa.me/60148827128?text=Hai+UNI+Dental" class="btn btn-wa" style="margin-top:12px;" target="_blank">📱 WhatsApp Terus</a>
+        <a href="https://wa.me/60148827128?text=Hai+UNI+Dental" class="btn btn-wa" style="margin-top:12px;" target="_blank"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px;flex-shrink:0"><path d="M8 1C4.14 1 1 4.14 1 8c0 1.5.43 2.9 1.18 4.08L1.5 14.5l2.42-.68A6.93 6.93 0 008 15c3.86 0 7-3.14 7-7s-3.14-7-7-7z" fill="#25D366"/><path d="M11.2 9.2c-.2-.1-1.2-.6-1.4-.7-.2-.1-.3-.1-.5.1s-.5.5-.6.6c-.1.1-.2.1-.4 0-.7-.3-1.4-.8-1.9-1.3-.2-.2-.3-.4-.1-.5l.4-.4c.1-.1.2-.2.2-.3s0-.2-.1-.4c-.1-.2-.5-1.2-.6-1.4-.2-.2-.3-.2-.5-.2h-.5c-.2 0-.4.1-.6.3-.2.2-.7.7-.7 1.7s.7 2 1 2.3l.1.1c.5.7 1.2 1.3 2 1.7.3.1.5.2.8.3.3.1.5.1.8 0 .3-.1 1-.4 1.1-.8.2-.4.2-.7.1-.8z" fill="#fff"/></svg> WhatsApp Terus</a>
       </div>
       <div class="form-success" id="formError" style="display:none;">
-        <div class="check">❌</div>
+        <div class="check"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
         <h4>Maaf, ada masalah teknikal.</h4>
         <p>Sila WhatsApp kami direct di <a href="https://wa.me/60148827128" target="_blank">014-882 7128</a> untuk booking.</p>
       </div>
@@ -583,9 +715,9 @@
   <div class="section-inner">
     <h2 class="section-title">Jangan Tangguh Lagi -<br>Senyuman Idaman Anda Bermula Hari Ini.</h2>
     <p class="section-subtitle">Konsultasi percuma. Tiada komitmen. Tiada paksaan. Kami di sini untuk bantu - bukan untuk jual.</p>
-    <div class="final-cta-btns">
-      <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+nak+tempah+konsultasi+percuma+hari+ini." class="btn btn-wa" target="_blank"> Tempah Sekarang</a>
-      <a href="tel:+60148827128" class="btn btn-outline"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px;flex-shrink:0"><path d="M14.7 10.07l-3.2-1.4a.62.62 0 00-.73.2l-1.07 1.33a8.53 8.53 0 01-4-4L6.93 5.2a.6.6 0 00.2-.73L5.73 1.27a.6.6 0 00-.66-.33L1.93 1.4a.6.6 0 00-.5.6A11.7 11.7 0 0013 14.53a.6.6 0 00.6-.5l.47-2.93a.6.6 0 00-.37-.66z" fill="currentColor"/></svg> Call 014-882 7128</a>
+    <div class="final-cta-btns stagger-children" style="--delay:0.3s">
+      <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+nak+tempah+konsultasi+percuma+hari+ini." class="btn btn-wa anim-fade-up" target="_blank"> Tempah Sekarang</a>
+      <a href="tel:+60148827128" class="btn btn-outline anim-fade-up" style="--delay:0.15s"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px;flex-shrink:0"><path d="M14.7 10.07l-3.2-1.4a.62.62 0 00-.73.2l-1.07 1.33a8.53 8.53 0 01-4-4L6.93 5.2a.6.6 0 00.2-.73L5.73 1.27a.6.6 0 00-.66-.33L1.93 1.4a.6.6 0 00-.5.6A11.7 11.7 0 0013 14.53a.6.6 0 00.6-.5l.47-2.93a.6.6 0 00-.37-.66z" fill="currentColor"/></svg> Call 014-882 7128</a>
     </div>
   </div>
 </section>
@@ -593,15 +725,103 @@
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
-    <strong>Klinik Pergigian UNI Dental Setia Alam</strong><br>
-    VA-G-03 Edusentral, Setia Alam, 40170 Shah Alam, Selangor<br>
-    ✆ 014-882 7128 | ✉ unidentalsetiaalam@gmail.com
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/logo-unidental.png" alt="UNI Dental Setia Alam">
+        <p>Klinik Pergigian UNI Dental Setia Alam — rawatan pergigian profesional dengan pendekatan lembut & mesra. Doktor berpengalaman, teknologi moden.</p>
+        <a href="https://wa.me/60148827128" class="btn btn-wa" style="display:inline-flex;padding:8px 20px;font-size:0.85rem;" target="_blank"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:-2px;flex-shrink:0;"><path d="M8 1C4.14 1 1 4.14 1 8c0 1.5.43 2.9 1.18 4.08L1.5 14.5l2.42-.68A6.93 6.93 0 008 15c3.86 0 7-3.14 7-7s-3.14-7-7-7z" fill="#25D366"/><path d="M11.2 9.2c-.2-.1-1.2-.6-1.4-.7-.2-.1-.3-.1-.5.1s-.5.5-.6.6c-.1.1-.2.1-.4 0-.7-.3-1.4-.8-1.9-1.3-.2-.2-.3-.4-.1-.5l.4-.4c.1-.1.2-.2.2-.3s0-.2-.1-.4c-.1-.2-.5-1.2-.6-1.4-.2-.2-.3-.2-.5-.2h-.5c-.2 0-.4.1-.6.3-.2.2-.7.7-.7 1.7s.7 2 1 2.3l.1.1c.5.7 1.2 1.3 2 1.7.3.1.5.2.8.3.3.1.5.1.8 0 .3-.1 1-.4 1.1-.8.2-.4.2-.7.1-.8z" fill="#fff"/></svg> WhatsApp 014-882 7128</a>
+      </div>
+      <div class="footer-col">
+        <h4>Navigasi</h4>
+        <a href="#rawatan">Rawatan</a>
+        <a href="#braces">Braces</a>
+        <a href="#keputusan">Keputusan</a>
+        <a href="#doktor">Doktor</a>
+        <a href="#testimoni">Testimoni</a>
+        <a href="#lokasi">Lokasi</a>
+      </div>
+      <div class="footer-col">
+        <h4>Waktu Operasi</h4>
+        <div class="hours-row"><span class="hours-day">Isnin - Ahad</span><span class="hours-time">9:00AM - 11:00PM</span></div>
+        <div style="margin-top:16px;">
+          <h4 style="margin-bottom:8px;">Hubungi</h4>
+          <p><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;"><path d="M14.7 10.07l-3.2-1.4a.62.62 0 00-.73.2l-1.07 1.33a8.53 8.53 0 01-4-4L6.93 5.2a.6.6 0 00.2-.73L5.73 1.27a.6.6 0 00-.66-.33L1.93 1.4a.6.6 0 00-.5.6A11.7 11.7 0 0013 14.53a.6.6 0 00.6-.5l.47-2.93a.6.6 0 00-.37-.66z" fill="currentColor"/></svg> 014-882 7128</p>
+          <p><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;"><path d="M14 3H2a1 1 0 00-1 1v8a1 1 0 001 1h12a1 1 0 001-1V4a1 1 0 00-1-1z" stroke="currentColor" stroke-width="1.2" fill="none"/><polyline points="1 4 8 9 15 4" stroke="currentColor" stroke-width="1.2" fill="none"/></svg> unidentalsetiaalam@gmail.com</p>
+          <p style="display:flex;align-items:flex-start;gap:6px;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px;"><path d="M8 0C4.7 0 2 2.7 2 6c0 4.5 6 10 6 10s6-5.5 6-10c0-3.3-2.7-6-6-6z" fill="currentColor" opacity="0.5"/><circle cx="8" cy="6" r="2" fill="#fff"/></svg> Seksyen U13, VA-G-03 Edusentral, 1, Jalan Setia Murni U13/51, Setia Alam, 40170 Shah Alam</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Klinik Pergigian UNI Dental. All rights reserved.</span>
+      <span>Built with <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-1px;color:var(--accent);"><path d="M8 3C5.5 3 4 4.5 4 6c0 2 1.5 3.5 1.5 4.5s.5 1.5 1 1.5c.3 0 .5-.4.7-1s.5-1.5 1-1.5.8 1 1 1.5.4 1 .7 1c.5 0 1-.5 1-1.5S12 8 12 6c0-1.5-1.5-3-4-3zM8 3a5 5 0 00-5 5c0 2.8 2.2 5 5 5s5-2.2 5-5-2.2-5-5-5z" opacity="0.3"/><circle cx="8" cy="6" r="1" fill="var(--accent)"/></svg> by <a href="https://jomdigital.my" target="_blank">Jom Digital</a></span>
+    </div>
     <p class="footer-disclaimer">
       <strong>Penafian:</strong> Maklumat di laman web ini adalah untuk tujuan pendidikan sahaja dan tidak menggantikan nasihat perubatan profesional. Sila berunding dengan doktor gigi untuk diagnosis dan rawatan yang sesuai. Imej yang dipaparkan mungkin bukan gambaran sebenar pesakit kami. Harga yang dinyatakan adalah anggaran dan tertakluk kepada perubahan selepas konsultasi.
     </p>
   </div>
 </footer>
 
-<script src="script.js"></script>
+<!-- INLINE JS (zero external dependency) -->
+<script>
+// Scroll-triggered animations
+(function() {
+  var els = document.querySelectorAll('[class*="anim-"]');
+  if (!els.length) return;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  els.forEach(function(el) { observer.observe(el); });
+  // Fallback after 4s
+  setTimeout(function() {
+    els.forEach(function(el) { el.classList.add('visible'); });
+  }, 4000);
+})();
+// Trust bar
+(function() {
+  var els = document.querySelectorAll('.trust-item');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.5 });
+  els.forEach(function(el) { obs.observe(el); });
+})();
+// BA Carousel
+(function() {
+  var idx = 0, slides = document.querySelectorAll('.ba-carousel-slide'),
+      track = document.querySelector('.ba-carousel-track'),
+      dots = document.querySelectorAll('.ba-dot');
+  function update() {
+    if (!track) return;
+    track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+  }
+  window.moveBA = function(dir) { idx = (idx + dir + slides.length) % slides.length; update(); };
+  window.goBA = function(i) { idx = i; update(); };
+  if (slides.length > 0) setInterval(function() { window.moveBA(1); }, 4000);
+})();
+// Booking Form
+async function submitBooking(e) {
+  e.preventDefault(); var form = e.target, btn = document.getElementById('bf-submit'), bt = document.getElementById('bf-btn-text'), bl = document.getElementById('bf-btn-loading');
+  btn.disabled = true; bt.style.display = 'none'; bl.style.display = 'inline';
+  try {
+    var res = await fetch('https://api.funnelcraft.my/api/v1/submit/uni-dental', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(Object.fromEntries(new FormData(form))) });
+    if (res.ok) { form.style.display='none'; document.getElementById('formSuccess').classList.add('show'); }
+    else { form.style.display='none'; document.getElementById('formError').style.display='block'; }
+  } catch(e) { form.style.display='none'; document.getElementById('formError').style.display='block'; }
+  btn.disabled = false;
+}
+// Mobile Menu
+function toggleMobileMenu() { var m=document.getElementById('mobileMenu'),h=document.getElementById('navHamburger'); m.classList.toggle('open'); h.classList.toggle('open'); document.body.style.overflow=m.classList.contains('open')?'hidden':''; }
+function closeMobileMenu() { var m=document.getElementById('mobileMenu'),h=document.getElementById('navHamburger'); m.classList.remove('open'); h.classList.remove('open'); document.body.style.overflow=''; }
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMobileMenu();});
+</script>
 </body>
 </html>
