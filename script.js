@@ -1,4 +1,4 @@
-// Scroll-triggered animations — watches all [class*="anim-"] elements
+// Scroll-triggered animations — viewport only, no fallback timeout (v2)
 (function() {
   const els = document.querySelectorAll('[class*="anim-"]');
   if (!els.length) return;
