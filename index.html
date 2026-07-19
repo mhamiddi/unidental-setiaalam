@@ -494,8 +494,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <!-- Installment Banner (Claude Design style) -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;background:linear-gradient(135deg,#0A1E45,var(--primary));border-radius:var(--radius);overflow:hidden;margin-bottom:20px;">
-      <div style="padding:32px 36px;">
+    <div class="installment-banner" style="display:grid;grid-template-columns:1fr 1fr;gap:0;background:linear-gradient(135deg,#0A1E45,var(--primary));border-radius:var(--radius);overflow:hidden;margin-bottom:20px;">
+      <div style="padding:32px 36px;" class="inst-left">
         <h4 style="font-size:1.1rem;font-weight:700;margin-bottom:16px;color:#fff;">Pelan Pembayaran Fleksibel</h4>
         <div style="display:flex;flex-direction:column;gap:10px;">
           <div style="display:flex;align-items:center;gap:10px;font-size:0.875rem;color:rgba(255,255,255,0.85);">
@@ -516,15 +516,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
       </div>
-      <div style="background:rgba(0,0,0,0.2);padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
+      <div style="background:rgba(0,0,0,0.2);padding:32px 36px;display:flex;flex-direction:column;justify-content:center;" class="inst-right">
         <div style="font-size:0.85rem;color:rgba(255,255,255,0.7);margin-bottom:16px;">Mulakan perjalanan ke senyuman idaman anda hari ini.</div>
-        <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+nak+tanya+pasal+pelan+pembayaran+braces." target="_blank" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:0.9rem;padding:14px 24px;border-radius:12px;">Semak Kelayakan Ansuran →</a>
+        <a href="https://wa.me/60148827128?text=Hai+UNI+Dental.+Saya+nak+tanya+pasal+pelan+pembayaran+braces." target="_blank" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:0.9rem;padding:14px 24px;border-radius:12px;" class="inst-cta">Semak Kelayakan Ansuran →</a>
       </div>
     </div>
     
     <style>
       @media (max-width:480px) {
         .installment-banner { grid-template-columns: 1fr !important; }
+        .inst-left { padding: 24px 20px !important; }
+        .inst-right { padding: 0 20px 28px 20px !important; }
+        .inst-cta { width: auto !important; padding: 14px 28px !important; font-size: 0.95rem !important; }
       }
     </style>
 
