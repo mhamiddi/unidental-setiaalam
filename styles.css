@@ -42,7 +42,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', syst
 .nav-cta:hover { background: var(--cta-primary-dark) !important; }
 
 /* ===== SECTIONS ===== */
-.section, .booking, .why, .ba-section, .doctor-section { padding: var(--section-pad) 20px; }
+.section, .booking, .why, .doctor-section { padding: var(--section-pad) 20px; }
 .section-inner { max-width: var(--max); margin: 0 auto; }
 .section-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-weight: 700; margin-bottom: 8px; text-align: center; }
 .section-title { font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 800; line-height: 1.2; margin-bottom: 12px; color: var(--text); text-align: center; }
@@ -95,10 +95,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', syst
 .treatment-card .wa-link { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--cta-primary); font-weight: 600; font-size: 0.9rem; padding: 8px 0; margin-top: auto; }
 .treatment-card .wa-link:hover { color: var(--cta-primary-dark); }
 
-/* ===== BEFORE & AFTER (Grid) ===== */
-.ba-section { background: var(--bg); }
-.ba-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 24px; margin-top: 32px; }
-.ba-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+/* ===== BRACES PRICING CARDS ===== */
 .ba-card .ba-img-wrap { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--bg-light); display: flex; }
 .ba-card .ba-img-wrap .ba-half { flex: 1; position: relative; overflow: hidden; }
 .ba-card .ba-img-wrap .ba-half img { width: 100%; height: 100%; object-fit: cover; }
@@ -341,30 +338,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', syst
   .anim-fade-left, .anim-fade-right { transform: translateY(20px); }
 }
 
-/* ===== BA CAROUSEL ===== */
-.ba-carousel-wrap { position: relative; max-width: 700px; margin: 32px auto 0; }
-.ba-carousel { overflow: hidden; border-radius: var(--radius); }
-.ba-carousel-track { display: flex; transition: transform 0.5s ease; }
-.ba-carousel-slide { min-width: 100%; background: #fff; border: 1px solid var(--border); }
-.ba-carousel-slide .ba-img-wrap { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--bg-light); display: flex; }
-.ba-carousel-slide .ba-img-wrap .ba-half { flex: 1; position: relative; overflow: hidden; }
-.ba-carousel-slide .ba-img-wrap .ba-half img { width: 100%; height: 100%; object-fit: cover; }
-.ba-carousel-slide .ba-divider { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: var(--accent); transform: translateX(-50%); z-index: 2; }
-.ba-carousel-slide .ba-divider::after { content: '↔'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--accent); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
-.ba-carousel-slide .ba-label { position: absolute; bottom: 8px; padding: 3px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-.ba-carousel-slide .ba-label.before { left: 8px; background: rgba(26,58,112,0.85); color: #fff; }
-.ba-carousel-slide .ba-label.after { right: 8px; background: rgba(241,138,32,0.9); color: #fff; }
-.ba-carousel-slide .ba-body { padding: 20px 24px 24px; }
-.ba-carousel-slide .ba-body h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
-.ba-carousel-slide .ba-body p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
-.ba-btn { position: absolute; top: 35%; transform: translateY(-50%); background: rgba(255,255,255,0.95); border: 1px solid var(--border); width: 44px; height: 44px; border-radius: 50%; font-size: 1.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); z-index: 5; color: var(--primary); transition: all 0.2s; line-height: 0; }
-.ba-btn:hover { background: var(--primary); color: #fff; }
-.ba-btn-prev { left: -18px; }
-.ba-btn-next { right: -18px; }
-.ba-dots { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
-.ba-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background 0.3s; border: none; padding: 0; }
-.ba-dot.active { background: var(--primary); width: 28px; border-radius: 5px; }
-
 /* ===== MOBILE NAV ===== */
 .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; flex-direction: column; gap: 5px; }
 .nav-hamburger span { display: block; width: 22px; height: 2.5px; background: var(--primary); border-radius: 2px; transition: all 0.3s; }
@@ -387,7 +360,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', syst
 
 /* ===== RESPONSIVE (general) ===== */
 @media (max-width: 768px) {
-  .section, .booking, .why, .ba-section, .doctor-section, .final-cta { padding: var(--section-pad-mobile) 16px; }
+  .section, .booking, .why, .doctor-section, .final-cta { padding: var(--section-pad-mobile) 16px; }
   body { padding-bottom: 0; }
   .hero { padding: var(--section-pad-mobile) 16px; min-height: auto; }
   .hero-inner { grid-template-columns: 1fr; gap: 28px; }

@@ -27,33 +27,6 @@
   trustItems.forEach(el => obs.observe(el));
 })();
 
-// Before & After Carousel
-(function() {
-  let baIndex = 0;
-  const baSlides = document.querySelectorAll('.ba-carousel-slide');
-  const baTrack = document.querySelector('.ba-carousel-track');
-  const baDots = document.querySelectorAll('.ba-dot');
-  
-  function updateBA() {
-    if (!baTrack) return;
-    baTrack.style.transform = 'translateX(-' + (baIndex * 100) + '%)';
-    baDots.forEach((d, i) => d.classList.toggle('active', i === baIndex));
-  }
-  
-  function moveBA(dir) {
-    baIndex = (baIndex + dir + baSlides.length) % baSlides.length;
-    updateBA();
-  }
-  
-  function goBA(idx) { baIndex = idx; updateBA(); }
-  
-  if (baSlides.length > 0) setInterval(function() { moveBA(1); }, 4000);
-  
-  // Expose functions globally for inline onclick handlers
-  window.moveBA = moveBA;
-  window.goBA = goBA;
-})();
-
 // Booking Form Submission — Hermes API Backend
 async function submitBooking(e) {
   e.preventDefault();

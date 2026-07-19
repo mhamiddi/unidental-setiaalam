@@ -150,7 +150,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="nav-links">
       <a href="#braces">Braces</a>
-      <a href="#keputusan">Keputusan</a>
       <a href="#rawatan">Rawatan</a>
       <a href="#kenapa">Kenapa Kami</a>
       <a href="#doktor">Doktor</a>
@@ -167,7 +166,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#braces" onclick="closeMobileMenu()">Braces</a>
-  <a href="#keputusan" onclick="closeMobileMenu()">Keputusan</a>
   <a href="#rawatan" onclick="closeMobileMenu()">Rawatan</a>
   <a href="#kenapa" onclick="closeMobileMenu()">Kenapa Kami</a>
   <a href="#doktor" onclick="closeMobileMenu()">Doktor</a>
@@ -331,63 +329,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- BEFORE & AFTER -->
-<section class="section ba-section" id="keputusan">
-  <div class="section-inner">
-    <p class="section-label">Keputusan Rawatan</p>
-    <h2 class="section-title">Sebelum & Selepas - <em style="color:var(--primary);font-style:normal;">Transformasi Senyuman</em></h2>
-    <p class="section-subtitle" style="margin-bottom:16px;">Lihat sendiri perubahan yang kami bawa kepada senyuman pesakit kami.</p>
-
-    <div class="ba-carousel-wrap">
-      <div class="ba-carousel" id="baCarousel">
-        <div class="ba-carousel-track">
-          <div class="ba-carousel-slide">
-            <div class="ba-img-wrap">
-              <div class="ba-half">
-                <div class="ba-label before">Sebelum</div>
-                <img src="images/braces-woman.webp" alt="Sebelum rawatan braces" loading="lazy" style="filter:grayscale(0.5) brightness(0.85);">
-              </div>
-              <div class="ba-divider"></div>
-              <div class="ba-half">
-                <div class="ba-label after">Selepas</div>
-                <img src="images/testimonial-smile.webp" alt="Selepas rawatan braces" loading="lazy">
-              </div>
-            </div>
-            <div class="ba-body">
-              <h3>Braces - Metal</h3>
-              <p>Pesakit dengan gigi tidak rata. Selepas 18 bulan rawatan braces metal - senyuman lurus, susunan gigi kemas, keyakinan meningkat.</p>
-            </div>
-          </div>
-          <div class="ba-carousel-slide">
-            <div class="ba-img-wrap">
-              <div class="ba-half">
-                <div class="ba-label before">Sebelum</div>
-                <img src="images/scaling-treatment.webp" alt="Sebelum rawatan" loading="lazy" style="filter:grayscale(0.5) brightness(0.8);">
-              </div>
-              <div class="ba-divider"></div>
-              <div class="ba-half">
-                <div class="ba-label after">Selepas</div>
-                <img src="images/before-after.webp" alt="Selepas rawatan" loading="lazy">
-              </div>
-            </div>
-            <div class="ba-body">
-              <h3>Whitening & Scaling</h3>
-              <p>Pembersihan menyeluruh + pemutihan 1 sesi. Gigi lebih bersih, putih berseri & nafas segar. Hasil ketara serta merta.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button class="ba-btn ba-btn-prev" onclick="moveBA(-1)" aria-label="Previous">&#8249;</button>
-      <button class="ba-btn ba-btn-next" onclick="moveBA(1)" aria-label="Next">&#8250;</button>
-      <div class="ba-dots" id="baDots">
-        <span class="ba-dot active" onclick="goBA(0)"></span>
-        <span class="ba-dot" onclick="goBA(1)"></span>
-      </div>
-    </div>
-    <p class="section-subtitle" style="margin-top:20px;width:100%;">Gambar sebenar pesakit dengan kebenaran. Hasil individu mungkin berbeza.</p>
   </div>
 </section>
 
@@ -850,7 +791,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h4>Navigasi</h4>
         <a href="#rawatan">Rawatan</a>
         <a href="#braces">Braces</a>
-        <a href="#keputusan">Keputusan</a>
         <a href="#doktor">Doktor</a>
         <a href="#testimoni">Testimoni</a>
         <a href="#lokasi">Lokasi</a>
@@ -903,20 +843,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   }, { threshold: 0.5 });
   els.forEach(function(el) { obs.observe(el); });
-})();
-// BA Carousel
-(function() {
-  var idx = 0, slides = document.querySelectorAll('.ba-carousel-slide'),
-      track = document.querySelector('.ba-carousel-track'),
-      dots = document.querySelectorAll('.ba-dot');
-  function update() {
-    if (!track) return;
-    track.style.transform = 'translateX(-' + (idx * 100) + '%)';
-    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
-  }
-  window.moveBA = function(dir) { idx = (idx + dir + slides.length) % slides.length; update(); };
-  window.goBA = function(i) { idx = i; update(); };
-  if (slides.length > 0) setInterval(function() { window.moveBA(1); }, 4000);
 })();
 // Booking Form
 async function submitBooking(e) {
